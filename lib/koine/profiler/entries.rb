@@ -29,12 +29,12 @@ module Koine
       end
 
       def sort_by(&block)
-        sorted = storage.sort_by { |item| yield(item[1]) }.to_h.values
+        sorted = storage.sort_by { |item| yield(item[1]) }.map {|key, group| group }
         create(sorted)
       end
 
       def reverse
-        create(storage.to_a.reverse.to_h.values)
+        create(storage.to_a.reverse.map {|key, group| group })
       end
 
       def slowest_to_fastest
