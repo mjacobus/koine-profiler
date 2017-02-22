@@ -6,20 +6,19 @@ module Koine
       extend Forwardable
 
       def_delegators :storage, :size
+      def_delegators :to_a, :each
 
       def initialize(groups = [])
         @storage = Hash.new
-        groups.each do |group|
-          add_group(group)
-        end
+        groups.each { |group| append_group(group) }
       end
 
       def append(name, time)
-        group = by_name(name) || create_group(name)
+        group = find_by_name(name) || create_group(name)
         append_to_group(group, name, time)
       end
 
-      def by_name(name)
+      def find_by_name(name)
         storage[name.to_s]
       end
 
@@ -29,33 +28,42 @@ module Koine
         end
       end
 
-      def desc
-        sorted = storage.sort_by do |key, item|
-          item.elapsed_time
-        end.to_h.values
-
-        self.class.new(sorted)
+      def sort_by(&block)
+        sorted = storage.sort_by { |item| yield(item[1]) }.to_h.values
+        create(sorted)
       end
 
-      def asc
-        sorted = storage.sort_by do |key, item|
-          item.elapsed_time
-        end.reverse.to_h.values
+      def reverse
+        create(storage.to_a.reverse.to_h.values)
+      end
 
-        self.class.new(sorted)
+      def slowest_to_faster
+        sort_by(&:elapsed_time)
+      end
+
+      def to_a
+        storage.values
+      end
+
+      def limit(number)
+        create(to_a.slice(0, number.to_i))
       end
 
       def ==(other)
-        storage == other.storage
+        storage.to_a == other.storage.to_a
       end
 
       private
 
-      def create_group(name)
-        add_group(EntryGroup.new(name))
+      def create(groups = [])
+        self.class.new(groups)
       end
 
-      def add_group(group)
+      def create_group(name)
+        append_group(EntryGroup.new(name))
+      end
+
+      def append_group(group)
         storage[group.name] = group
       end
 

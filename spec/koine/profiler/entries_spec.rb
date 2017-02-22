@@ -1,14 +1,39 @@
 require 'spec_helper'
 
 RSpec.describe Koine::Profiler::Entries do
+  let(:ten)       { create_group_with_entries('ten', 9, 1) }
+  let(:fifteen)   { create_group_with_entries('fifteen', 9, 6) }
+  let(:twenty)    { create_group_with_entries('twenty', 9, 10) }
+  let(:entries) {
+    described_class.new([
+      fifteen,
+      ten,
+      twenty,
+    ])
+  }
+
   specify '#size is initially zero' do
     expect(subject.size).to eq(0)
   end
 
-  describe '#by_name' do
+  specify '#each iterates every item' do
+    collection = []
+
+    entries.each do |entry|
+      collection << entry
+    end
+
+    expect(collection).to eq([fifteen, ten, twenty ])
+  end
+
+  specify '#limit limits the result' do
+    expect(entries.limit('2').to_a).to eq([fifteen, ten])
+  end
+
+  describe '#find_by_name' do
     context  'when has no entry group' do
       it 'returns nil' do
-        expect(subject.by_name('unexisting')).to be_nil
+        expect(subject.find_by_name('unexisting')).to be_nil
       end
     end
 
@@ -17,7 +42,7 @@ RSpec.describe Koine::Profiler::Entries do
         expected_group = create_entry_group_with_initial_entry(10, 'foo')
 
         subject.append('foo', 10)
-        group = subject.by_name('foo')
+        group = subject.find_by_name('foo')
 
         expect(group).to eq(expected_group)
         expect(group).to be_a(expected_group.class)
@@ -49,8 +74,8 @@ RSpec.describe Koine::Profiler::Entries do
     subject.append('bar', 40)
 
     expect(subject.size).to eq(2)
-    expect(subject.by_name('foo').elapsed_time).to eq(30)
-    expect(subject.by_name('bar').elapsed_time).to eq(70)
+    expect(subject.find_by_name('foo').elapsed_time).to eq(30)
+    expect(subject.find_by_name('bar').elapsed_time).to eq(70)
   end
 
   specify '#elapsed_time returns the some of elapsed time' do
@@ -61,38 +86,53 @@ RSpec.describe Koine::Profiler::Entries do
     expect(subject.elapsed_time).to eq(60)
   end
 
+  specify '#to_a returns array of items' do
+    one = create_group_with_entries('one', 9, 1)
+    two = create_group_with_entries('two', 9, 1, 1)
+
+    expected = [one, two]
+
+    entries = described_class.new(expected)
+
+    expect(entries.to_a).to eq(expected)
+  end
+
   describe "sorting" do
-    let(:ten)       { create_group_with_entries('ten', 9, 1) }
-    let(:fifteen)   { create_group_with_entries('fifteen', 9, 6) }
-    let(:twenty)    { create_group_with_entries('twenty', 9, 10) }
-    let(:unordered) {
-      described_class.new([
-        fifteen,
-        ten,
-        twenty,
-      ])
-    }
 
-    specify '#desc reorders and gives a new object' do
+    specify '#sort_by takes item as block argument' do
       expected = described_class.new([
-        twenty,
         fifteen,
         ten,
+        twenty,
       ])
 
-      actual = unordered.desc
+      sorted = entries.sort_by { |item| item.name }
+      sorted_with_shortcut = entries.sort_by(&:name)
+
+      expect(sorted).to eq(expected)
+      expect(sorted_with_shortcut).to eq(expected)
+    end
+
+    specify '#slowest_to_faster reorders and gives a new object' do
+      expected = described_class.new([
+        ten,
+        fifteen,
+        twenty,
+      ])
+
+      actual = entries.slowest_to_faster
 
       expect(actual).to eq(expected)
     end
 
-    specify '#desc reorders and gives a new object' do
+    specify '#reverse reverses the order' do
       expected = described_class.new([
+        twenty,
         ten,
         fifteen,
-        twenty,
       ])
 
-      actual = unordered.asc
+      actual = entries.reverse
 
       expect(actual).to eq(expected)
     end
