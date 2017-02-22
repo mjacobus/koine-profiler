@@ -49,16 +49,16 @@ RSpec.describe Koine::Profiler::Entries do
     subject.append('bar', 40)
 
     expect(subject.size).to eq(2)
-    expect(subject.by_name('foo').total_elapsed_time).to eq(30)
-    expect(subject.by_name('bar').total_elapsed_time).to eq(70)
+    expect(subject.by_name('foo').elapsed_time).to eq(30)
+    expect(subject.by_name('bar').elapsed_time).to eq(70)
   end
 
-  specify '#total_elapsed_time returns the some of elapsed time' do
+  specify '#elapsed_time returns the some of elapsed time' do
     subject.append('foo', 10)
     subject.append('foo', 20)
     subject.append('bar', 30)
 
-    expect(subject.total_elapsed_time).to eq(60)
+    expect(subject.elapsed_time).to eq(60)
   end
 
   describe "sorting" do

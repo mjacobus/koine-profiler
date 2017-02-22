@@ -21,10 +21,10 @@ module Koine
       end
 
       def <=>(other)
-        total_elapsed_time <=> other.total_elapsed_time
+        elapsed_time <=> other.elapsed_time
       end
 
-      def total_elapsed_time
+      def elapsed_time
         entries.inject(0) { |total, entry| entry.elapsed_time + total }
       end
     end

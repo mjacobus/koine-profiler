@@ -33,16 +33,16 @@ RSpec.describe Koine::Profiler::EntryGroup do
     end
   end
 
-  describe '#total_elapsed_time' do
+  describe '#elapsed_time' do
     it 'is initially zero' do
-      expect(subject.total_elapsed_time).to eq(0)
+      expect(subject.elapsed_time).to eq(0)
     end
 
     it 'returs the sum of all elapsed times' do
       subject.append(create_entry(1))
       subject.append(create_entry(11))
 
-      expect(subject.total_elapsed_time).to eq(12)
+      expect(subject.elapsed_time).to eq(12)
     end
   end
 

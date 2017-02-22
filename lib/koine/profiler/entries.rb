@@ -23,15 +23,15 @@ module Koine
         storage[name.to_s]
       end
 
-      def total_elapsed_time
+      def elapsed_time
         storage.inject(0) do |total, (key, group)|
-          total + group.total_elapsed_time
+          total + group.elapsed_time
         end
       end
 
       def desc
         sorted = storage.sort_by do |key, item|
-          item.total_elapsed_time
+          item.elapsed_time
         end.to_h.values
 
         self.class.new(sorted)
@@ -39,7 +39,7 @@ module Koine
 
       def asc
         sorted = storage.sort_by do |key, item|
-          item.total_elapsed_time
+          item.elapsed_time
         end.reverse.to_h.values
 
         self.class.new(sorted)
