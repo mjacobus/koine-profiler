@@ -22,7 +22,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+profiler.profile('some potentially slow task') do
+  potentially_slow()
+end
+
+profiler.profile('require rails/all') do
+  require 'rails/all'
+end
+```
+
+### Reporting
+
+```ruby
+reporter = Koine::Profiler::Reporters::Cli.new
+
+# all
+reporter.report(entries)
+
+# 5 slowest
+five_slowest = profile.entries.slowest_to_fastest.limit(5)
+reporter.report(five_slowest)
+```
 
 ## Development
 

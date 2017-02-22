@@ -37,7 +37,7 @@ module Koine
         create(storage.to_a.reverse.to_h.values)
       end
 
-      def slowest_to_faster
+      def slowest_to_fastest
         sort_by(&:elapsed_time)
       end
 

@@ -113,14 +113,14 @@ RSpec.describe Koine::Profiler::Entries do
       expect(sorted_with_shortcut).to eq(expected)
     end
 
-    specify '#slowest_to_faster reorders and gives a new object' do
+    specify '#slowest_to_fastest reorders and gives a new object' do
       expected = described_class.new([
         ten,
         fifteen,
         twenty,
       ])
 
-      actual = entries.slowest_to_faster
+      actual = entries.slowest_to_fastest
 
       expect(actual).to eq(expected)
     end
