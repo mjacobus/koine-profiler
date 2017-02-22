@@ -6,7 +6,14 @@ module Koine
       def initialize(name, elapsed_time)
         @name, @elapsed_time = name.to_s, elapsed_time
       end
+
+      def ==(other)
+        other.name == name && other.elapsed_time == elapsed_time
+      end
+
+      def <=>(other)
+         elapsed_time <=> other.elapsed_time
+      end
     end
   end
 end
-

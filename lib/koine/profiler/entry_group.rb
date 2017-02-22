@@ -13,7 +13,15 @@ module Koine
       def append(entry)
         raise InvalidEntryError.new(entry.name) unless entry.name == name
 
-        @entries << entry
+        entries << entry
+      end
+
+      def ==(other)
+        entries == other.entries
+      end
+
+      def <=>(other)
+        total_elapsed_time <=> other.total_elapsed_time
       end
 
       def total_elapsed_time

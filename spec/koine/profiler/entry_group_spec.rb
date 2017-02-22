@@ -3,10 +3,6 @@ require 'spec_helper'
 RSpec.describe Koine::Profiler::EntryGroup do
   subject { Koine::Profiler::EntryGroup.new('the given name') }
 
-  def create_entry(elapsed_time, name = 'the given name')
-    Koine::Profiler::Entry.new(name, elapsed_time)
-  end
-
   describe '#name' do
     it 'returns the constructor given name' do
       expect(subject.name).to eq('the given name')
@@ -48,5 +44,46 @@ RSpec.describe Koine::Profiler::EntryGroup do
 
       expect(subject.total_elapsed_time).to eq(12)
     end
+  end
+
+
+  describe '#==' do
+    let(:other) { create_entry_group_with_initial_entry(10) }
+
+    it "returns true when elements are the same" do
+      entry = create_entry_group_with_initial_entry(10)
+
+      expect(entry).to eq(other)
+    end
+
+    it "returns false when name is different" do
+      entry = create_entry_group_with_initial_entry(10, 'other name')
+
+      expect(entry).not_to eq(other)
+    end
+
+    it "returns false when elapsed time is different" do
+      entry = create_entry_group_with_initial_entry(11)
+
+      expect(entry).not_to eq(other)
+    end
+  end
+
+  it 'is sortable by elapsed time' do
+    unsorted = [
+      create_entry_group_with_initial_entry(20),
+      create_entry_group_with_initial_entry(25),
+      create_entry_group_with_initial_entry(10),
+    ]
+
+    expected = [
+      create_entry_group_with_initial_entry(10),
+      create_entry_group_with_initial_entry(20),
+      create_entry_group_with_initial_entry(25),
+    ]
+
+    sorted = unsorted.sort
+
+    expect(sorted).to eq(expected)
   end
 end
