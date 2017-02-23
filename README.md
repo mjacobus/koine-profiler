@@ -3,6 +3,11 @@
 Simple profiler
 
 [![Build Status](https://travis-ci.org/mjacobus/koine-profiler.svg?branch=master)](https://travis-ci.org/mjacobus/koine-profiler)
+[![Code Coverage](https://scrutinizer-ci.com/g/mjacobus/koine-profiler/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mjacobus/koine-profiler/?branch=master)
+[![Code Climate](https://codeclimate.com/github/mjacobus/koine-profiler/badges/gpa.svg)](https://codeclimate.com/github/mjacobus/koine-profiler)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mjacobus/koine-profiler/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mjacobus/koine-profiler/?branch=master)
+[![Dependency Status](https://gemnasium.com/mjacobus/koine-profiler.svg)](https://gemnasium.com/mjacobus/koine-profiler)
+[![Gem Version](https://badge.fury.io/rb/koine-profiler.svg)](https://badge.fury.io/rb/koine-profiler)
 
 ## Installation
 
