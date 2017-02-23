@@ -98,7 +98,6 @@ RSpec.describe Koine::Profiler::Entries do
   end
 
   describe "sorting" do
-
     specify '#sort_by takes item as block argument' do
       expected = described_class.new([
         fifteen,
