@@ -12,11 +12,13 @@ module Koine
     end
 
     def profile(name)
+      value = nil
       start_time = Time.now.utc
-      yield if block_given?
+      value = yield if block_given?
       finish_time = Time.now.utc
 
       entries.append(name, finish_time - start_time)
+      value
     end
   end
 end

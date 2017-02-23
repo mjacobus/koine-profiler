@@ -5,6 +5,14 @@ RSpec.describe Koine::Profiler do
     expect(Koine::Profiler::VERSION).not_to be nil
   end
 
+  it 'returns what was in the block' do
+    value = subject.profile('something') do
+      10
+    end
+
+    expect(value).to be(10)
+  end
+
   it "can profile with a name and a block" do
     data = nil
     now = Time.now.utc
