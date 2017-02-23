@@ -23,18 +23,18 @@ module Koine
       end
 
       def elapsed_time
-        storage.inject(0) do |total, (key, group)|
+        storage.inject(0) do |total, (_key, group)|
           total + group.elapsed_time
         end
       end
 
-      def sort_by(&block)
-        sorted = storage.sort_by { |item| yield(item[1]) }.map {|key, group| group }
+      def sort_by(&_block)
+        sorted = storage.sort_by { |item| yield(item[1]) }.map {|_key, group| group }
         create(sorted)
       end
 
       def reverse
-        create(storage.to_a.reverse.map {|key, group| group })
+        create(storage.to_a.reverse.map { |_key, group| group })
       end
 
       def slowest_to_fastest
