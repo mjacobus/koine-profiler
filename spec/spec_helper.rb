@@ -17,6 +17,7 @@ end
 
 require "bundler/setup"
 require "koine/profiler"
+require "koine/profiler/reporters/cli"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -27,7 +28,9 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    p profiler.entries.slowest_to_fastest.limit(2)
+    entries = profiler.entries.slowest_to_fastest.reverse
+    reporter = Koine::Profiler::Reporters::Cli.new
+    reporter.report(entries)
   end
 end
 

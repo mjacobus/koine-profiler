@@ -40,6 +40,8 @@ end
 ### Reporting
 
 ```ruby
+require 'koine/profiler/reporters/cli'
+
 reporter = Koine::Profiler::Reporters::Cli.new
 
 # all
