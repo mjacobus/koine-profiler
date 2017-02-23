@@ -10,7 +10,7 @@ RSpec.describe Koine::Profiler::Reporters::Cli do
       Koine::Profiler::Entries.new([
         create_group_with_entries('first', 1),
         create_group_with_entries('second', 1, 2),
-        create_group_with_entries('third', 1, 2, 3),
+        create_group_with_entries('third', 1, 2, 3)
       ])
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Koine::Profiler::Reporters::Cli do
         ['Entry', 'Elapsed Time', '# of calls'],
         ['first', 1, 1],
         ['second', 3, 2],
-        ['third', 6, 3],
+        ['third', 6, 3]
       ]
 
       expect(table).to eq(expected_table)

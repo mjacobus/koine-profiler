@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Koine::Profiler do
-  it "has a version number" do
+  it 'has a version number' do
     expect(Koine::Profiler::VERSION).not_to be nil
   end
 
@@ -14,13 +14,13 @@ RSpec.describe Koine::Profiler do
       expect(value).to be(10)
     end
 
-    it "can profile with a name and a block" do
+    it 'can profile with a name and a block' do
       data = nil
       now = Time.now.utc
       first_time = Time.now.utc
       second_time = Time.now.utc + 10
 
-      def second_time.-(other)
+      def second_time.-(_other)
         10
       end
 

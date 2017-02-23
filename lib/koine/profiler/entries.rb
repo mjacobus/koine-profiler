@@ -9,7 +9,7 @@ module Koine
       def_delegators :to_a, :each
 
       def initialize(groups = [])
-        @storage = Hash.new
+        @storage = {}
         groups.each { |group| append_group(group) }
       end
 
@@ -29,7 +29,7 @@ module Koine
       end
 
       def sort_by(&_block)
-        sorted = storage.sort_by { |item| yield(item[1]) }.map {|_key, group| group }
+        sorted = storage.sort_by { |item| yield(item[1]) }.map { |_key, group| group }
         create(sorted)
       end
 

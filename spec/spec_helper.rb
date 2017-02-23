@@ -1,12 +1,12 @@
 if ENV['TRAVIS']
-  require "coveralls"
+  require 'coveralls'
   Coveralls.wear!
 end
 
-require "simplecov"
+require 'simplecov'
 
 SimpleCov.start do
-  add_filter "/spec/"
+  add_filter '/spec/'
 end
 
 class MyProfiler < Koine::Profiler
@@ -15,13 +15,13 @@ class MyProfiler < Koine::Profiler
   end
 end
 
-require "bundler/setup"
-require "koine/profiler"
-require "koine/profiler/reporters/cli"
+require 'bundler/setup'
+require 'koine/profiler'
+require 'koine/profiler/reporters/cli'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
+  config.example_status_persistence_file_path = '.rspec_status'
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

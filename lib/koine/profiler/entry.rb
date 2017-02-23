@@ -4,7 +4,8 @@ module Koine
       attr_reader :name, :elapsed_time
 
       def initialize(name, elapsed_time)
-        @name, @elapsed_time = name.to_s, elapsed_time
+        @name = name.to_s
+        @elapsed_time = elapsed_time
       end
 
       def ==(other)
@@ -12,7 +13,7 @@ module Koine
       end
 
       def <=>(other)
-         elapsed_time <=> other.elapsed_time
+        elapsed_time <=> other.elapsed_time
       end
     end
   end

@@ -46,23 +46,22 @@ RSpec.describe Koine::Profiler::EntryGroup do
     end
   end
 
-
   describe '#==' do
     let(:other) { create_entry_group_with_initial_entry(10) }
 
-    it "returns true when elements are the same" do
+    it 'returns true when elements are the same' do
       entry = create_entry_group_with_initial_entry(10)
 
       expect(entry).to eq(other)
     end
 
-    it "returns false when name is different" do
+    it 'returns false when name is different' do
       entry = create_entry_group_with_initial_entry(10, 'other name')
 
       expect(entry).not_to eq(other)
     end
 
-    it "returns false when elapsed time is different" do
+    it 'returns false when elapsed time is different' do
       entry = create_entry_group_with_initial_entry(11)
 
       expect(entry).not_to eq(other)
@@ -73,13 +72,13 @@ RSpec.describe Koine::Profiler::EntryGroup do
     unsorted = [
       create_entry_group_with_initial_entry(20),
       create_entry_group_with_initial_entry(25),
-      create_entry_group_with_initial_entry(10),
+      create_entry_group_with_initial_entry(10)
     ]
 
     expected = [
       create_entry_group_with_initial_entry(10),
       create_entry_group_with_initial_entry(20),
-      create_entry_group_with_initial_entry(25),
+      create_entry_group_with_initial_entry(25)
     ]
 
     sorted = unsorted.sort

@@ -4,13 +4,13 @@ RSpec.describe Koine::Profiler::Entries do
   let(:ten)       { create_group_with_entries('ten', 9, 1) }
   let(:fifteen)   { create_group_with_entries('fifteen', 9, 6) }
   let(:twenty)    { create_group_with_entries('twenty', 9, 10) }
-  let(:entries) {
+  let(:entries) do
     described_class.new([
       fifteen,
       ten,
-      twenty,
+      twenty
     ])
-  }
+  end
 
   specify '#size is initially zero' do
     expect(subject.size).to eq(0)
@@ -23,7 +23,7 @@ RSpec.describe Koine::Profiler::Entries do
       collection << entry
     end
 
-    expect(collection).to eq([fifteen, ten, twenty ])
+    expect(collection).to eq([fifteen, ten, twenty])
   end
 
   specify '#limit limits the result' do
@@ -31,7 +31,7 @@ RSpec.describe Koine::Profiler::Entries do
   end
 
   describe '#find_by_name' do
-    context  'when has no entry group' do
+    context 'when has no entry group' do
       it 'returns nil' do
         expect(subject.find_by_name('unexisting')).to be_nil
       end
@@ -97,15 +97,15 @@ RSpec.describe Koine::Profiler::Entries do
     expect(entries.to_a).to eq(expected)
   end
 
-  describe "sorting" do
+  describe 'sorting' do
     specify '#sort_by takes item as block argument' do
       expected = described_class.new([
         fifteen,
         ten,
-        twenty,
+        twenty
       ])
 
-      sorted = entries.sort_by { |item| item.name }
+      sorted = entries.sort_by(&:name)
       sorted_with_shortcut = entries.sort_by(&:name)
 
       expect(sorted).to eq(expected)
@@ -116,7 +116,7 @@ RSpec.describe Koine::Profiler::Entries do
       expected = described_class.new([
         twenty,
         fifteen,
-        ten,
+        ten
       ])
 
       actual = entries.slowest
@@ -128,7 +128,7 @@ RSpec.describe Koine::Profiler::Entries do
       expected = described_class.new([
         twenty,
         ten,
-        fifteen,
+        fifteen
       ])
 
       actual = entries.reverse

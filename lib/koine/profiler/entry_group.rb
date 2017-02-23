@@ -11,7 +11,7 @@ module Koine
       end
 
       def append(entry)
-        raise InvalidEntryError.new(entry.name) unless entry.name == name
+        fail InvalidEntryError.new(entry.name) unless entry.name == name
 
         entries << entry
       end

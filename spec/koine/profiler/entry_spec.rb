@@ -18,19 +18,19 @@ RSpec.describe Koine::Profiler::Entry do
   describe '#==' do
     let(:other) { described_class.new('foo', 1) }
 
-    it "returns false when name is different" do
+    it 'returns false when name is different' do
       entry = described_class.new('bar', 1)
 
       expect(entry).not_to eq(other)
     end
 
-    it "returns false when elapsed time is different" do
+    it 'returns false when elapsed time is different' do
       entry = described_class.new('foo', 2)
 
       expect(entry).not_to eq(other)
     end
 
-    it "returns true when name and elapsed time are equal" do
+    it 'returns true when name and elapsed time are equal' do
       entry = described_class.new('foo', 1)
 
       expect(entry).to eq(other)
@@ -41,13 +41,13 @@ RSpec.describe Koine::Profiler::Entry do
     unsorted = [
       described_class.new('foo', 20),
       described_class.new('foo', 25),
-      described_class.new('foo', 10),
+      described_class.new('foo', 10)
     ]
 
     expected = [
       described_class.new('foo', 10),
       described_class.new('foo', 20),
-      described_class.new('foo', 25),
+      described_class.new('foo', 25)
     ]
 
     sorted = unsorted.sort
