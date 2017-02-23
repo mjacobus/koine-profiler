@@ -9,6 +9,12 @@ SimpleCov.start do
   add_filter "/spec/"
 end
 
+class MyProfiler < Koine::Profiler
+  def self.instance
+    @instance ||= Koine::Profiler.new
+  end
+end
+
 require "bundler/setup"
 require "koine/profiler"
 
@@ -19,27 +25,46 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.after(:suite) do
+    p profiler.entries.slowest_to_fastest.limit(2)
+  end
 end
 
 def create_entry_group(name)
-  Koine::Profiler::EntryGroup.new(name)
+  profile('create_entry_group') do
+    Koine::Profiler::EntryGroup.new(name)
+  end
 end
 
-
 def create_entry(elapsed_time, name = 'the given name')
-  Koine::Profiler::Entry.new(name, elapsed_time)
+  profile('create_entry') do
+    Koine::Profiler::Entry.new(name, elapsed_time)
+  end
 end
 
 def create_entry_group_with_initial_entry(elapsed_time, name = 'foo')
-  group = Koine::Profiler::EntryGroup.new(name)
-  group.append(create_entry(elapsed_time, name))
-  group
+  profile('create_entry_group_with_initial_entry') do
+    group = Koine::Profiler::EntryGroup.new(name)
+    group.append(create_entry(elapsed_time, name))
+    group
+  end
 end
 
 def create_group_with_entries(name, *elapsed_times)
-  group = create_entry_group(name)
-  elapsed_times.each do |elapsed_time|
-    group.append(create_entry(elapsed_time, name))
+  profile('create_group_with_entries') do
+    group = create_entry_group(name)
+    elapsed_times.each do |elapsed_time|
+      group.append(create_entry(elapsed_time, name))
+    end
+    group
   end
-  group
+end
+
+def profiler
+  MyProfiler.instance
+end
+
+def profile(name, &block)
+  profiler.profile(name, &block)
 end
