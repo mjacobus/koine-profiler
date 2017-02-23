@@ -37,8 +37,8 @@ module Koine
         create(storage.to_a.reverse.map { |_key, group| group })
       end
 
-      def slowest_to_fastest
-        sort_by(&:elapsed_time)
+      def slowest
+        sort_by(&:elapsed_time).reverse
       end
 
       def to_a

@@ -48,7 +48,7 @@ reporter = Koine::Profiler::Reporters::Cli.new
 reporter.report(entries)
 
 # 5 slowest
-five_slowest = profile.entries.slowest_to_fastest.limit(5)
+five_slowest = profile.entries.slowest.limit(5)
 reporter.report(five_slowest)
 ```
 

@@ -28,7 +28,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    entries = profiler.entries.slowest_to_fastest.reverse
+    entries = profiler.entries.slowest
     reporter = Koine::Profiler::Reporters::Cli.new
     reporter.report(entries)
   end
