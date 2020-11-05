@@ -21,7 +21,7 @@ RSpec.describe Koine::Profiler::EntryGroup do
 
       subject.append(entry)
 
-      expect(subject.entries).to eq([entry])
+      expect(subject.entries).to be_equal_to([entry])
     end
 
     it 'raises an error when the entry does not have the same name as the group' do

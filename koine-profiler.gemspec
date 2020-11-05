@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'terminal-table'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'object_comparator'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'bundler', '~> 2.1.4'
   spec.add_development_dependency 'rake', '~> 10.0'
