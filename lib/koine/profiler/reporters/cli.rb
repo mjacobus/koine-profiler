@@ -13,7 +13,7 @@ module Koine
           @table << ['Entry', 'Elapsed Time', '# of calls']
 
           entries.each do |entry|
-            @table << [entry.name, entry.elapsed_time, entry.entries.size]
+            @table << [entry.name, entry.elapsed_time, entry.hits]
           end
 
           @output << @table

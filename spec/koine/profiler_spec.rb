@@ -7,7 +7,7 @@ RSpec.describe Koine::Profiler do
     expect(Koine::Profiler::VERSION).not_to be nil
   end
 
-  context '#profile' do
+  describe '#profile' do
     it 'returns what was in the block' do
       value = profiler.profile('something') do
         10
@@ -35,9 +35,19 @@ RSpec.describe Koine::Profiler do
 
       expect(data).to eq('foo')
       expect(profiler.entries.size).to eq(1)
-      expect(profiler.entries.values.first.name).to eq('test profile')
-      expect(profiler.entries.values.first.elapsed_time).to eq(10)
-      expect(profiler.entries.values.first.memory_used).to eq(0)
+      expect(profiler.entries.first.name).to eq('test profile')
+      expect(profiler.entries.first.elapsed_time).to eq(10)
+      expect(profiler.entries.first.memory_used).to eq(0)
+    end
+  end
+
+  describe '#entries' do
+    it 'returns the number of entries as an array' do
+      profiler.profile('test profile') do
+        # do work
+      end
+
+      expect(profiler.entries.map(&:name)).to eq(['test profile'])
     end
   end
 end

@@ -4,24 +4,26 @@ RSpec.describe Koine::Profiler::Reporters::Cli do
   context '#report' do
     let(:table) { [] }
     let(:output) { [] }
-    subject { described_class.new(output, table) }
+    subject(:reporter) { described_class.new(output, table) }
 
-    let(:entries) do
-      Koine::Profiler::Entries.new([
-        create_group_with_entries('first', 1),
-        create_group_with_entries('second', 1, 2),
-        create_group_with_entries('third', 1, 2, 3)
-      ])
+    let(:entries) { [first, second] }
+    let(:first) { Koine::Profiler::Entry.new('first') }
+    let(:second) { Koine::Profiler::Entry.new('second') }
+
+    before do
+      first.increment(elapsed_time: 1, memory_used: 2)
+      second.increment(elapsed_time: 1, memory_used: 2)
+      second.increment(elapsed_time: 2, memory_used: 2)
     end
 
+
     it 'outputs all the calls to the terminal' do
-      subject.report(entries)
+      reporter.report(entries)
 
       expected_table = [
         ['Entry', 'Elapsed Time', '# of calls'],
         ['first', 1, 1],
         ['second', 3, 2],
-        ['third', 6, 3]
       ]
 
       expect(table).to eq(expected_table)

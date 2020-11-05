@@ -1,57 +1,20 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Koine::Profiler::Entry do
-  subject { Koine::Profiler::Entry.new('the given name', 1) }
+  subject(:entry) { described_class.new('the-name') }
 
-  describe '#name' do
-    it 'returns the name given in the construtor' do
-      expect(subject.name).to eq('the given name')
-    end
+  it 'has a name' do
+    expect(entry.name).to eq('the-name')
   end
 
-  describe '#elapsed_time' do
-    it 'returns the elapsed time given in the construtor' do
-      expect(subject.elapsed_time).to eq(1)
-    end
-  end
+  it 'hits can be added' do
+    entry.increment(elapsed_time: 20, memory_used: 50)
+    entry.increment(elapsed_time: 10, memory_used: 40)
 
-  describe '#==' do
-    let(:other) { described_class.new('foo', 1) }
-
-    it 'returns false when name is different' do
-      entry = described_class.new('bar', 1)
-
-      expect(entry).not_to eq(other)
-    end
-
-    it 'returns false when elapsed time is different' do
-      entry = described_class.new('foo', 2)
-
-      expect(entry).not_to eq(other)
-    end
-
-    it 'returns true when name and elapsed time are equal' do
-      entry = described_class.new('foo', 1)
-
-      expect(entry).to eq(other)
-    end
-  end
-
-  it 'is sortable by elapsed time' do
-    unsorted = [
-      described_class.new('foo', 20),
-      described_class.new('foo', 25),
-      described_class.new('foo', 10)
-    ]
-
-    expected = [
-      described_class.new('foo', 10),
-      described_class.new('foo', 20),
-      described_class.new('foo', 25)
-    ]
-
-    sorted = unsorted.sort
-
-    expect(sorted).to eq(expected)
+    expect(entry.hits).to eq(2)
+    expect(entry.elapsed_time).to eq(30)
+    expect(entry.memory_used).to eq(90)
   end
 end
