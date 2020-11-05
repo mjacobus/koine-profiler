@@ -1,13 +1,15 @@
 require 'spec_helper'
 
 RSpec.describe Koine::Profiler do
+  subject(:profiler) { described_class.new }
+
   it 'has a version number' do
     expect(Koine::Profiler::VERSION).not_to be nil
   end
 
   context '#profile' do
     it 'returns what was in the block' do
-      value = subject.profile('something') do
+      value = profiler.profile('something') do
         10
       end
 
@@ -27,16 +29,15 @@ RSpec.describe Koine::Profiler do
       allow(Time).to receive(:now).and_return(now)
       allow(now).to receive(:utc).and_return(first_time, second_time)
 
-      subject.profile('test profile') do
+      profiler.profile('test profile') do
         data = 'foo'
       end
 
-      expected_entries = Koine::Profiler::Entries.new([
-        create_group_with_entries('test profile', 10)
-      ])
-
       expect(data).to eq('foo')
-      expect(subject.entries).to eq(expected_entries)
+      expect(profiler.entries.size).to eq(1)
+      expect(profiler.entries.values.first.name).to eq('test profile')
+      expect(profiler.entries.values.first.elapsed_time).to eq(10)
+      expect(profiler.entries.values.first.memory_used).to eq(0)
     end
   end
 end

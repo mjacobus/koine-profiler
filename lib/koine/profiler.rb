@@ -2,13 +2,14 @@ require 'koine/profiler/version'
 require 'koine/profiler/entries'
 require 'koine/profiler/entry_group'
 require 'koine/profiler/entry'
+require 'koine/profiler/profile_entry'
 
 module Koine
   class Profiler
     attr_reader :entries
 
     def initialize
-      @entries = Entries.new
+      @entries = {}
     end
 
     def profile(name)
@@ -17,8 +18,15 @@ module Koine
       value = yield if block_given?
       finish_time = Time.now.utc
 
-      entries.append(name, finish_time - start_time)
+      add_entry(name, time: finish_time - start_time, memory: 0)
       value
+    end
+
+    private
+
+    def add_entry(name, time:, memory:)
+      entry = @entries[name] ||= ProfileEntry.new(name)
+      entry.increment(elapsed_time: time, memory_used: memory)
     end
   end
 end
