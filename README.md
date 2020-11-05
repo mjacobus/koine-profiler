@@ -44,12 +44,7 @@ require 'koine/profiler/reporters/cli'
 
 reporter = Koine::Profiler::Reporters::Cli.new
 
-# all
-reporter.report(entries)
-
-# 5 slowest
-five_slowest = profile.entries.slowest.limit(5)
-reporter.report(five_slowest)
+reporter.report(reporter.entries)
 ```
 
 ## Development
