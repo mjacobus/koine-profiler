@@ -31,9 +31,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'terminal-table'
+  spec.add_dependency 'get_process_mem'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'object_comparator'
   spec.add_development_dependency 'coveralls'
-  spec.add_development_dependency 'bundler', '~> 1.14'
+  spec.add_development_dependency 'bundler', '~> 2.1.4'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
 end

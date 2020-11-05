@@ -18,6 +18,7 @@ end
 require 'bundler/setup'
 require 'koine/profiler'
 require 'koine/profiler/reporters/cli'
+require 'object_comparator/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -25,12 +26,6 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
-  end
-
-  config.after(:suite) do
-    entries = profiler.entries.slowest
-    reporter = Koine::Profiler::Reporters::Cli.new
-    reporter.report(entries)
   end
 end
 
