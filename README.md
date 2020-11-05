@@ -47,6 +47,15 @@ reporter = Koine::Profiler::Reporters::Cli.new
 reporter.report(reporter.entries)
 ```
 
+Output example:
+
+```text
++----------------------------+-------------------+--------------+---------+
+| Entry                      | Elapsed Time      | Memory       | # hits  |
+| some potentially slow task | 48.59363997100241 | 7.5625       | 1000000 |
++----------------------------+-------------------+--------------+---------+
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
