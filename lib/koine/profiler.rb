@@ -20,6 +20,10 @@ module Koine
       @entries.values
     end
 
+    def self.instance
+      @instance ||= new
+    end
+
     private
 
     def add_entry(name, time:, memory:)

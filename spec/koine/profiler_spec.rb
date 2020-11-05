@@ -50,4 +50,9 @@ RSpec.describe Koine::Profiler do
       expect(profiler.entries.map(&:name)).to eq(['test profile'])
     end
   end
+
+  it 'has an singleton instance' do
+    expect(described_class.instance).to be_a(described_class)
+    expect(described_class.instance).to be(described_class.instance)
+  end
 end
