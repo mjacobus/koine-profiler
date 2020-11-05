@@ -26,12 +26,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-
-  config.after(:suite) do
-    entries = profiler.entries.slowest
-    reporter = Koine::Profiler::Reporters::Cli.new
-    reporter.report(entries)
-  end
 end
 
 def create_entry_group(name)
