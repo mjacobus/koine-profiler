@@ -1,5 +1,6 @@
 require 'koine/profiler/version'
 require 'koine/profiler/entry'
+require 'get_process_mem'
 
 module Koine
   class Profiler
@@ -10,9 +11,15 @@ module Koine
     def profile(name)
       value = nil
       start_time = Time.now.utc
+      start_memory = GetProcessMem.new.mb
       value = yield if block_given?
+      finish_memory = GetProcessMem.new.mb
       finish_time = Time.now.utc
-      add_entry(name, time: finish_time - start_time, memory: 0)
+      add_entry(
+        name,
+        time: finish_time - start_time,
+        memory: finish_memory - start_memory
+      )
       value
     end
 

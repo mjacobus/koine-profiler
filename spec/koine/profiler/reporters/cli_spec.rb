@@ -21,9 +21,9 @@ RSpec.describe Koine::Profiler::Reporters::Cli do
       reporter.report(entries)
 
       expected_table = [
-        ['Entry', 'Elapsed Time', '# of calls'],
-        ['first', 1, 1],
-        ['second', 3, 2],
+        ['Entry', 'Elapsed Time', 'Memory', '# hits'],
+        ['first', 1,  2, 1],
+        ['second', 3, 4,  2],
       ]
 
       expect(table).to eq(expected_table)

@@ -10,10 +10,10 @@ module Koine
         end
 
         def report(entries)
-          @table << ['Entry', 'Elapsed Time', '# of calls']
+          @table << ['Entry', 'Elapsed Time', 'Memory', '# hits']
 
           entries.each do |entry|
-            @table << [entry.name, entry.elapsed_time, entry.hits]
+            @table << [entry.name, entry.elapsed_time, entry.memory_used, entry.hits]
           end
 
           @output << @table
